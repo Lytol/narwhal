@@ -8,10 +8,10 @@ Gem::Specification.new do |s|
   s.authors     = [ 'Brian Smith' ]
   s.email       = 'brian.e.smith@gmail.com'
   s.files       = FileList[
+                    '[README,LICENSE]*',
                     'lib/**/*.rb',
-                    'bin/*',
-                    '[A-Z]*',
-                    'test/**/*'].to_a
+                    'bin/*'
+                  ].to_a
   s.executables << 'narwhal'
   s.homepage    = 'https://github.com/lytol/narwhal'
   s.license     = 'MIT'
