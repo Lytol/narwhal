@@ -1,0 +1,18 @@
+PATH
+  remote: .
+  specs:
+    narwhal (0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    minitest (5.4.3)
+    rake (10.4.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  minitest (~> 5.4)
+  narwhal!
+  rake (~> 10.0)

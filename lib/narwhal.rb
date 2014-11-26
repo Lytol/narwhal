@@ -1,5 +1,4 @@
-module Narwhal
+module Narwhal; end
 
-  VERSION = "0.1.0"
-
-end
+require_relative 'narwhal/master'
+require_relative 'narwhal/version'
