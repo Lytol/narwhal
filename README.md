@@ -7,7 +7,9 @@ Narwhal is a worker server designed to take advantage of features in \*nix kerne
 TODO
 ----
 
-* Should have a "narwhal" binary
+* INT/TERM - quick shutdown, kills all workers immediately
+* QUIT - graceful shutdown, waits for workers to finish their current request before finishing
+* Should load app on startup
 * Should use ActiveJob to load jobs
 * Should use adapter to fetch and perform jobs
 * Adapter: resque

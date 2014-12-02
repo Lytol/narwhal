@@ -2,4 +2,4 @@
 
 require 'narwhal'
 
-Narwhal::Master.new.run!
+Narwhal::Command.new(ARGV).run!
