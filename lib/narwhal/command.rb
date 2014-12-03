@@ -9,12 +9,12 @@ module Narwhal
       @options[:environment] = "development"
 
       parse_options!(args)
+
+      @master = Master.new(@options)
     end
 
     def run!
-      loop do
-        sleep(1000)
-      end
+      @master.run!
     end
 
     private
