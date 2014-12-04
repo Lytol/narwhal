@@ -7,20 +7,32 @@ Narwhal is a worker server designed to take advantage of features in \*nix kerne
 TODO
 ----
 
+* log from child to master using pipe
+* use Kafka adapter to pull from any of queues in ActiveJob
+* master should pull messages from queue using select
+* master select should use self-pipe for signal processing
+* master should hand-off messages to children using pipe and select in children
+* child select should use self-pipe for signal processing
+
 * INT/TERM - quick shutdown, kills all workers immediately
-* QUIT - graceful shutdown, waits for workers to finish their current request before finishing
-* -n should specify number of workers to start
 * Should load app on startup
 * Should use ActiveJob to load jobs
-* Should use adapter to fetch and perform jobs
-* Adapter: resque
+* ActiveJob Adapter for Narwhal (Kafka)
+
+
+Architecture
+------------
+
+Master Process
+  * spawn workers (prefork)
 
 
 References
 ----------
 
-* Unicorn
-* Foreman
+* [Unicorn](http://unicorn.bogomips.org/)
+* [Foreman](http://ddollar.github.io/foreman/)
+* [ActiveJob](http://edgeguides.rubyonrails.org/active_job_basics.html)
 * http://blog.rubybestpractices.com/posts/ewong/016-Implementing-Signal-Handlers.html
 * http://cr.yp.to/docs/selfpipe.html
 

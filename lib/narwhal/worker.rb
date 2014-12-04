@@ -1,7 +1,6 @@
 module Narwhal
 
   class Worker
-    attr_accessor :pid
     attr_reader :index
 
     SIGNALS = [ :QUIT, :INT, :TERM ]
@@ -20,13 +19,12 @@ module Narwhal
         case @signal_queue.shift
         when :QUIT # Terminate abruptly
           Narwhal.log("worker[#{index}] signal=QUIT")
-          exit(0)
+          break
         when :TERM, :INT # Terminate gracefully
           Narwhal.log("worker[#{index}] signal=TERM")
-          exit(0)
+          break
         else
           # Wait for next message from master, process when ready
-          Narwhal.log("worker[#{index}] running=true")
           sleep(1)
         end
       end

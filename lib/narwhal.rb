@@ -1,3 +1,5 @@
+require 'time'
+
 module Narwhal
 
   def self.title=(title)
@@ -5,7 +7,7 @@ module Narwhal
   end
 
   def self.log(msg)
-    $stdout.puts(msg)
+    $stdout.puts("#{Time.now.iso8601} #{$$} #{msg}")
   end
 
 end

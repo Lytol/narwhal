@@ -26,11 +26,9 @@ module Narwhal
         case @signal_queue.shift
         when :INT, :TERM # Terminate gracefully
           Narwhal.log("master signal=INT")
-          kill_all_workers!(:TERM)
           break
         when :QUIT # Terminate abruptly
           Narwhal.log("master signal=QUIT")
-          kill_all_workers!(:QUIT)
           break
         when :HUP # TODO
           Narwhal.log("master signal=HUP")
@@ -40,10 +38,11 @@ module Narwhal
           Narwhal.log("master signal=USR2")
         else
           # TODO: Wait for next message, pass along to available worker
-          Narwhal.log("master timeout=true")
           sleep(1)
         end
       end
+
+      reap_workers!
 
       Narwhal.log("master stopped=true")
     end
@@ -57,18 +56,33 @@ module Narwhal
       end
 
       def spawn_workers!
-        (1..worker_count).each do |n|
-          next if @workers[n]
+        (1..worker_count).each do |index|
+          next if @workers.any? { |w| w.index == index }
 
-          worker = Worker.new(n)
+          worker = Worker.new(index)
 
           if pid = fork
-            worker.pid = pid
-            @workers[n] = worker
+            @workers[pid] = worker
+            Narwhal.log("master.spawned index=#{index} pid=#{pid}")
           else
             reset_for_worker!
-            worker.pid = $$
             worker.run!
+            exit!(0)
+          end
+        end
+      end
+
+      def reap_workers!
+        signal_workers!(:TERM)
+
+        loop do
+          begin
+            pid = Process.wait
+            worker = @workers.delete(pid)
+            Narwhal.log("master.reaped index=#{worker.index} pid=#{pid}")
+          rescue Errno::ECHILD
+            # No more children, let's get out of here
+            break
           end
         end
       end
@@ -82,9 +96,9 @@ module Narwhal
         @workers.clear
       end
 
-      def kill_all_workers!(sig)
-        @workers.each do |n, worker|
-          Process.kill(sig, worker.pid)
+      def signal_workers!(sig)
+        @workers.each do |pid, worker|
+          Process.kill(sig, pid)
         end
       end
   end
