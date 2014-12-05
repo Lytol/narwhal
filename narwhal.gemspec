@@ -4,7 +4,7 @@ require_relative 'lib/narwhal/version'
 Gem::Specification.new do |s|
   s.name        = 'narwhal'
   s.version     = Narwhal::VERSION
-  s.summary     = 'Narwhal is a worker server designed to take advantage of features in *nix kernels, inspired by Unicorn'
+  s.summary     = 'Narwhal is a Ruby prefork worker designed to be broker agnostic and take advantage of features in *nix kernels'
   s.authors     = [ 'Brian Smith' ]
   s.email       = 'brian.e.smith@gmail.com'
   s.files       = FileList[
