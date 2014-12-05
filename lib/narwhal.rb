@@ -1,4 +1,5 @@
 require 'time'
+require 'logger'
 
 module Narwhal
 
@@ -6,8 +7,8 @@ module Narwhal
     $0 = "narwhal: #{title}"
   end
 
-  def self.log(msg)
-    $stdout.puts("#{Time.now.iso8601} #{$$} #{msg}")
+  def self.logger
+    @logger ||= Logger.new(STDOUT)
   end
 
 end

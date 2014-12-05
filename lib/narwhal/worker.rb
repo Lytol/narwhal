@@ -18,10 +18,10 @@ module Narwhal
       loop do
         case @signal_queue.shift
         when :QUIT # Terminate abruptly
-          Narwhal.log("worker[#{index}] signal=QUIT")
+          Narwhal.logger.debug("worker[#{index}] signal=QUIT")
           break
         when :TERM, :INT # Terminate gracefully
-          Narwhal.log("worker[#{index}] signal=TERM")
+          Narwhal.logger.debug("worker[#{index}] signal=TERM")
           break
         else
           # Wait for next message from master, process when ready

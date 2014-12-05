@@ -15,7 +15,7 @@ module Narwhal
     end
 
     def run!
-      Narwhal.log("master started=true environment=#{environment} workers=#{worker_count} pid=#{pid}")
+      Narwhal.logger.info("master started=true environment=#{environment} workers=#{worker_count} pid=#{pid}")
 
       initialize_signal_handlers!
       spawn_workers!
@@ -25,17 +25,17 @@ module Narwhal
       loop do
         case @signal_queue.shift
         when :INT, :TERM # Terminate gracefully
-          Narwhal.log("master signal=INT")
+          Narwhal.logger.debug("master signal=INT")
           break
         when :QUIT # Terminate abruptly
-          Narwhal.log("master signal=QUIT")
+          Narwhal.logger.debug("master signal=QUIT")
           break
         when :HUP # TODO
-          Narwhal.log("master signal=HUP")
+          Narwhal.logger.debug("master signal=HUP")
         when :USR1 # TODO
-          Narwhal.log("master signal=USR1")
+          Narwhal.logger.debug("master signal=USR1")
         when :USR2 # TODO
-          Narwhal.log("master signal=USR2")
+          Narwhal.logger.debug("master signal=USR2")
         else
           # TODO: Wait for next message, pass along to available worker
           sleep(1)
@@ -44,7 +44,7 @@ module Narwhal
 
       reap_workers!
 
-      Narwhal.log("master stopped=true")
+      Narwhal.logger.info("master stopped=true")
     end
 
     private
@@ -63,7 +63,7 @@ module Narwhal
 
           if pid = fork
             @workers[pid] = worker
-            Narwhal.log("master.spawned index=#{index} pid=#{pid}")
+            Narwhal.logger.info("master.spawned index=#{index} pid=#{pid}")
           else
             reset_for_worker!
             worker.run!
@@ -79,7 +79,7 @@ module Narwhal
           begin
             pid = Process.wait
             worker = @workers.delete(pid)
-            Narwhal.log("master.reaped index=#{worker.index} pid=#{pid}")
+            Narwhal.logger.info("master.reaped index=#{worker.index} pid=#{pid}")
           rescue Errno::ECHILD
             # No more children, let's get out of here
             break

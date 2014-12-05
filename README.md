@@ -26,6 +26,11 @@ Architecture
 Master Process
   * spawn workers (prefork)
 
+  * Each tick:
+    - did we receive a signal? handle
+    - can we grab the next message? handle
+    - if no on either of above, `select` on both
+
 
 References
 ----------
