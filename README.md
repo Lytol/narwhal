@@ -10,6 +10,7 @@ Architecture
 - Require ActiveJob
 - Require Ruby 2.x (copy-on-write)
 - Require \*nix (select and signals)
+- Don't support daemonize or logfile, use deamontools, upstart, systemd, etc!
 
 Adapters
   * Redis
@@ -55,6 +56,7 @@ Notes
 * Should load app on startup
 * Should use ActiveJob to load jobs
 * REFACTOR: `_after_fork` and `_before_fork` for both master and worker internally
+* Add rails generator for configuring Narwhal
 
 
 References
@@ -66,6 +68,9 @@ References
 * [Advanced Programming in the Unix Environment](http://www.amazon.com/Advanced-Programming-UNIX-Environment-Edition/dp/0321637739)
 * http://blog.rubybestpractices.com/posts/ewong/016-Implementing-Signal-Handlers.html
 * http://cr.yp.to/docs/selfpipe.html
+* http://unicorn.bogomips.org/DESIGN.html
+* http://thorstenball.com/blog/2014/11/20/unicorn-unix-magic-tricks/
+* http://tomayko.com/writings/unicorn-is-unix
 
 
 License
