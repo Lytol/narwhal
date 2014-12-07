@@ -5,6 +5,10 @@ module Narwhal
     #
     class Redis
 
+      def initialize(config)
+
+      end
+
       def enqueue(queue_name, job)
 
       end

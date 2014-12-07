@@ -5,7 +5,8 @@ module Narwhal
   class Command
 
     def initialize(args)
-      @master = Master.new(parse_options(args))
+      Narwhal.config = parse_options(args)
+      @master = Master.new
     end
 
     def run!

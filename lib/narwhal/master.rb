@@ -3,21 +3,14 @@ module Narwhal
   class Master
     SIGNALS = [ :INT, :QUIT, :TERM, :HUP, :USR1, :USR2 ]
 
-    def initialize(options)
-      if options.has_key?(:path)
-        @config = Config.new(options, options.delete(:path))
-      else
-        @config = Config.new(options)
-      end
-
+    def initialize
       @pid = $$
-
       @signal_queue = []
       @workers = {}
     end
 
     def run!
-      Narwhal.logger.info("master started=true environment=#{@config.environment} workers=#{@config.workers}")
+      Narwhal.logger.info("master started=true environment=#{Narwhal.config.environment} workers=#{Narwhal.config.workers}")
 
       initialize_signal_handlers!
       spawn_workers!
@@ -58,7 +51,9 @@ module Narwhal
       end
 
       def spawn_workers!
-        (1..@config.workers.to_i).each do |index|
+        num = Narwhal.config.workers.to_i
+
+        (1..num).each do |index|
           next if @workers.any? { |w| w.index == index }
 
           worker = Worker.new(index)

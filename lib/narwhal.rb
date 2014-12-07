@@ -2,6 +2,14 @@ require 'logger'
 
 module Narwhal
 
+  def self.config=(options)
+    @config = Config.new(options)
+  end
+
+  def self.config
+    @config ||= Config.new({})
+  end
+
   def self.title=(title)
     $0 = "narwhal: #{title}"
   end

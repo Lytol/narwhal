@@ -3,7 +3,7 @@ require_relative '../test_helper'
 describe Narwhal::Config do
   subject { Narwhal::Config }
 
-  let(:config) { Narwhal::Config.new({}, "test/fixtures/blank-config.yml") }
+  let(:config) { Narwhal::Config.new(path: "test/fixtures/blank-config.yml") }
 
   it "should have default `environment`" do
     config.environment.must_equal "development"
@@ -20,7 +20,7 @@ describe Narwhal::Config do
   end
 
   describe "when config file does not exist" do
-    let(:config) { Narwhal::Config.new({}, "test/fixtures/does-not-exist.yml") }
+    let(:config) { Narwhal::Config.new(path: "test/fixtures/does-not-exist.yml") }
 
     it "should raise exception" do
       -> {
@@ -31,7 +31,7 @@ describe Narwhal::Config do
   end
 
   describe "when attributes are provided via `new`" do
-    let(:config) { Narwhal::Config.new({ workers: 9 }, "test/fixtures/sample-config.yml") }
+    let(:config) { Narwhal::Config.new(workers: 9, path: "test/fixtures/sample-config.yml") }
 
     it "should override default attributes" do
       config.workers.must_equal 9
@@ -43,7 +43,7 @@ describe Narwhal::Config do
   end
 
   describe "when attributes are provided via config file" do
-    let(:config) { Narwhal::Config.new({ workers: 9 }, "test/fixtures/sample-config.yml") }
+    let(:config) { Narwhal::Config.new(workers: 9, path: "test/fixtures/sample-config.yml") }
 
     it "should override default attributes" do
       config.adapter[:name].must_equal 'redis'

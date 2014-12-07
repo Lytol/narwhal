@@ -19,18 +19,22 @@ module Narwhal
   #
   class Config
     DEFAULT = {
+      path: "config/narwhal.yml",
       environment: "development",
       workers: 2,
       adapter: nil
     }
 
-    def initialize(options = {}, path = "config/narwhal.yml")
+    def initialize(options = {})
       @config = DEFAULT.dup.with_indifferent_access
 
-      # Add envrionment from command-line first, to maintain precedence
+      # Add environment and config file path first because we need
+      # these to properly load the config file
+      # config file correctly.
+      @config[:path] = options[:path] if options[:path]
       @config[:environment] = options[:environment] if options[:environment]
 
-      @config.merge!(config_file_options(path))
+      @config.merge!(config_file_options)
       @config.merge!(options)
     end
 
@@ -48,10 +52,10 @@ module Narwhal
         end
       end
 
-      def config_file_options(path)
-        YAML.load(File.read(path))[environment]
+      def config_file_options
+        YAML.load(File.read(@config[:path]))[environment]
       rescue
-        raise(InvalidConfig, "The config file #{path} is either missing or invalid")
+        raise(InvalidConfig, "The config file #{@config[:path]} is either missing or invalid")
       end
   end
 end
