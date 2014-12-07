@@ -9,4 +9,8 @@ describe Narwhal do
   describe ".log" do
     it "should print to stdout"
   end
+
+  describe ".title=" do
+    it "should set the process title"
+  end
 end

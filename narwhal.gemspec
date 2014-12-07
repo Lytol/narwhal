@@ -16,6 +16,9 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/lytol/narwhal'
   s.license     = 'MIT'
 
+  s.add_dependency "activejob", '~> 4.2.0.rc2'
+  s.add_dependency "activesupport", '~> 4.2.0.rc2'
+
   s.add_development_dependency "rake", '~> 10.0'
   s.add_development_dependency 'minitest', '~> 5.4'
 end

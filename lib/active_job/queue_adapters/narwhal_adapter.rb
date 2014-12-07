@@ -8,7 +8,7 @@ module ActiveJob
     class NarwhalAdapter
 
       def self.enqueue(job) #:nodoc:
-        Narwhal.broker.enqueue(job.queue_name, job.serialize)
+        Narwhal.adapter.enqueue(job.queue_name, job.serialize)
       end
 
       def self.enqueue_at(job, timestamp) #:nodoc:

@@ -1,0 +1,4 @@
+development:
+  workers: 5
+  adapter:
+    name: redis

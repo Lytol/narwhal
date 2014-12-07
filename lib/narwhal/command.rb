@@ -5,13 +5,7 @@ module Narwhal
   class Command
 
     def initialize(args)
-      @options = {}
-      @options[:environment] = "development"
-      @options[:worker_count] = 2
-
-      parse_options!(args)
-
-      @master = Master.new(@options)
+      @master = Master.new(parse_options(args))
     end
 
     def run!
@@ -20,18 +14,20 @@ module Narwhal
 
     private
 
-      def parse_options!(args)
+      def parse_options(args)
+        options = {}
+
         parser = OptionParser.new do |opts|
-          opts.on("-e", "--environment ENVIRONMENT", "Set the environment to ENVIRONMENT (default: development)") do |env|
-            @options[:environment] = env
+          opts.on("-c", "--config PATH", "Set the config to PATH (default: #{Config::DEFAULT[:config_path]})") do |path|
+            options[:path] = path
           end
 
-          opts.on("-n", "--workers NUM", Integer, "Set the number of workers to NUM (default: 2)") do |num|
-            if num < 1
-              raise(OptionParser::InvalidOption, "NUM must be at least 1")
-            end
+          opts.on("-e", "--environment ENVIRONMENT", "Set the environment to ENVIRONMENT (default: #{Config::DEFAULT[:environment]})") do |env|
+            options[:environment] = env
+          end
 
-            @options[:worker_count] = num
+          opts.on("-n", "--workers NUM", Integer, "Set the number of workers to NUM (default: #{Config::DEFAULT[:workers]})") do |num|
+            options[:workers] = num
           end
 
           opts.on_tail("-h", "--help", "Show help for command line options") do
@@ -48,6 +44,8 @@ module Narwhal
           puts parser
           exit
         end
+
+        return options
       end
 
   end
