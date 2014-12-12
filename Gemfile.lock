@@ -17,12 +17,20 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    ansi (1.4.3)
+    builder (3.2.2)
     globalid (0.3.0)
       activesupport (>= 4.1.0)
     i18n (0.7.0.beta1)
     json (1.8.1)
     minitest (5.4.3)
+    minitest-reporters (1.0.8)
+      ansi
+      builder
+      minitest (>= 5.0)
+      ruby-progressbar
     rake (10.4.0)
+    ruby-progressbar (1.7.0)
     thread_safe (0.3.4)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
@@ -32,5 +40,6 @@ PLATFORMS
 
 DEPENDENCIES
   minitest (~> 5.4)
+  minitest-reporters
   narwhal!
   rake (~> 10.0)
