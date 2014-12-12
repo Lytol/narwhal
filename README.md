@@ -3,6 +3,9 @@ Narwhal
 
 Narwhal is a Ruby prefork worker designed to be broker agnostic and take advantage of features in \*nix kernels
 
+[![Build Status](https://travis-ci.org/Lytol/narwhal.svg?branch=master)](https://travis-ci.org/Lytol/narwhal)
+[![Gem Version](https://badge.fury.io/rb/narwhal.svg)](http://badge.fury.io/rb/narwhal)
+
 
 Architecture
 ------------
