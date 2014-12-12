@@ -38,10 +38,6 @@ module Narwhal
       @config.merge!(options)
     end
 
-    def to_hash
-      @config
-    end
-
     private
 
       def method_missing(attr, *args)
